@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Computing Assessment | Equity '26</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --deep-green: #022c22;
+            --emerald: #064e3b;
+            --border: rgba(212, 175, 55, 0.2);
+            --glass: rgba(255, 255, 255, 0.03);
+            --crimson: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background: radial-gradient(circle at center, #064e3b 0%, #022c22 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .hidden { display: none !important; }
+        .cambria { font-family: 'Cambria', serif; }
+
+        .quiz-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(2, 44, 34, 0.85);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 60px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+            position: relative;
+        }
+
+        /* Ambient Glow */
+        .quiz-wrapper::after {
+            content: ""; position: absolute; bottom: -100px; left: -100px;
+            width: 300px; height: 300px; background: var(--gold);
+            filter: blur(150px); opacity: 0.05; z-index: -1;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 30px;
+        }
+
+        .header-section h1 {
+            color: var(--gold);
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        /* Start Screen */
+        .feature-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+        .feature-card {
+            background: var(--glass);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: 0.3s;
+        }
+        .feature-card:hover { border-color: var(--gold); background: rgba(212, 175, 55, 0.05); }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            margin-bottom: 50px;
+            overflow: hidden;
+        }
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.4s ease;
+        }
+
+        /* Question Area */
+        .question-box h2 {
+            font-size: 1.8rem;
+            line-height: 1.4;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .opt-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 18px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .opt-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold);
+            transform: translateX(10px);
+        }
+
+        .opt-index {
+            color: var(--gold);
+            font-weight: 800;
+            margin-right: 20px;
+            font-size: 1.2rem;
+        }
+
+        /* Results */
+        .result-card {
+            text-align: center;
+            padding: 40px;
+        }
+        .percentage {
+            font-size: 6rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin: 20px 0;
+            text-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-luxury {
+            background: linear-gradient(135deg, var(--gold), #b08d29);
+            color: #022c22;
+            padding: 20px 50px;
+            border-radius: 15px;
+            border: none;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 850px) {
+            .options-grid, .feature-container { grid-template-columns: 1fr; }
+            .quiz-wrapper { padding: 30px; }
+            .header-section h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-wrapper">
+        <div class="header-section">
+            <h1 class="cambria">Global Assessment</h1>
+            <p style="opacity: 0.5; font-size: 0.8rem; letter-spacing: 1px;">EQUITY '26 ELITE HUB CERTIFICATION</p>
+        </div>
+
+        <div id="screen-intro">
+            <h2 class="cambria" style="font-size: 2rem; text-align: center; margin-bottom: 20px;">Computing Development</h2>
+            <p style="text-align: center; opacity: 0.7; line-height: 1.6; max-width: 700px; margin: 0 auto;">
+                This broad-spectrum examination is designed to test your mastery over the fundamental pillars of 
+                modern computing: Architecture, Networking, Security, and Data Logic.
+            </p>
+
+            <div class="feature-container">
+                <div class="feature-card">
+                    <i data-lucide="layers" style="color: var(--gold); width: 32px; height: 32px;"></i>
+                    <h3 style="margin-top:15px; font-size: 1rem;">Architectures</h3>
+                </div>
+                <div class="feature-card">
+                    <i data-lucide="database" style="color: var(--gold); width: 32px; height: 32px;"></i>
+                    <h3 style="margin-top:15px; font-size: 1rem;">Data Logic</h3>
+                </div>
+                <div class="feature-card">
+                    <i data-lucide="terminal" style="color: var(--gold); width: 32px; height: 32px;"></i>
+                    <h3 style="margin-top:15px; font-size: 1rem;">OS Internals</h3>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn-luxury" onclick="initQuiz()">Begin Assessment</button>
+            </div>
+        </div>
+
+        <div id="screen-active" class="hidden">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <span style="font-size: 0.9rem; font-weight: 600;">PROGRESS: <span id="q-idx">1</span>/15</span>
+                <span id="timer" style="color: var(--gold); font-weight: 800;">20s</span>
+            </div>
+            <div class="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+
+            <div class="question-box">
+                <h2 id="q-text" class="cambria"></h2>
+                <div id="options-box" class="options-grid"></div>
+            </div>
+        </div>
+
+        <div id="screen-result" class="hidden">
+            <div class="result-card">
+                <p style="text-transform: uppercase; letter-spacing: 3px; opacity: 0.6;">Assessment Complete</p>
+                <div class="percentage" id="final-score">0%</div>
+                <h2 id="rank-title" class="cambria" style="font-size: 2rem; color: white;">RANK: AMATEUR</h2>
+                <p id="rank-msg" style="margin: 20px auto 40px; max-width: 500px; opacity: 0.7; line-height: 1.7;"></p>
+                <button class="btn-luxury" onclick="location.reload()">Reset Portal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const QUESTIONS = [
+            { q: "Which CPU architecture type uses a simplified instruction set to increase performance via faster execution of each instruction?", o: ["CISC", "RISC", "EPIC", "MISC"], a: 1 },
+            { q: "In Networking, which OSI layer is responsible for IP addressing and routing?", o: ["Data Link", "Transport", "Network", "Session"], a: 2 },
+            { q: "What is the primary difference between a Compiler and an Interpreter?", o: ["Speed only", "One translates line-by-line, the other translates the whole file", "Memory usage only", "There is no difference"], a: 1 },
+            { q: "Which Big O notation represents 'Constant Time' complexity?", o: ["O(n)", "O(log n)", "O(1)", "O(n²)"], a: 2 },
+            { q: "In a Relational Database, what ensures that a record in one table corresponds to a valid record in another?", o: ["Primary Key", "Foreign Key", "Unique Index", "Checksum"], a: 1 },
+            { q: "What is the process of converting plaintext into ciphertext called?", o: ["Salting", "Hashing", "Encryption", "Encoding"], a: 2 },
+            { q: "Which memory type is volatile and loses its data when power is removed?", o: ["ROM", "SSD", "RAM", "HDD"], a: 2 },
+            { q: "Which logic gate outputs true ONLY if both inputs are true?", o: ["OR Gate", "XOR Gate", "NAND Gate", "AND Gate"], a: 3 },
+            { q: "What is the standard port number for Secure Web Traffic (HTTPS)?", o: ["80", "21", "443", "22"], a: 2 },
+            { q: "In Object-Oriented Programming, what allows a class to inherit properties from another class?", o: ["Encapsulation", "Polymorphism", "Inheritance", "Abstraction"], a: 2 },
+            { q: "Which data structure operates on the 'First-In-First-Out' (FIFO) principle?", o: ["Stack", "Queue", "Heap", "Tree"], a: 1 },
+            { q: "Which pioneer is known as the inventor of the first high-level programming language, COBOL?", o: ["Alan Turing", "Grace Hopper", "Bill Gates", "Linus Torvalds"], a: 1 },
+            { q: "What is the primary function of the Kernel in an Operating System?", o: ["User Interface", "File Management", "Bridge between hardware and software", "Web Browsing"], a: 2 },
+            { q: "Which protocol is used for securely logging into a remote server?", o: ["HTTP", "SSH", "FTP", "Telnet"], a: 1 },
+            { q: "What is the binary representation of the decimal number 10?", o: ["1100", "1001", "1010", "1111"], a: 2 }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+        let timer;
+        let timeLeft = 20;
+
+        function initQuiz() {
+            document.getElementById('screen-intro').classList.add('hidden');
+            document.getElementById('screen-active').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            clearInterval(timer);
+            timeLeft = 20;
+            updateTimerUI();
+
+            const q = QUESTIONS[currentQ];
+            document.getElementById('q-idx').innerText = currentQ + 1;
+            document.getElementById('q-text').innerText = q.q;
+            document.getElementById('progress-bar').style.width = ((currentQ + 1) / QUESTIONS.length * 100) + "%";
+
+            const optContainer = document.getElementById('options-box');
+            optContainer.innerHTML = "";
+
+            q.o.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = "opt-btn";
+                btn.innerHTML = `<span class="opt-index">${String.fromCharCode(65 + i)}</span> ${opt}`;
+                btn.onclick = () => selectAnswer(i);
+                optContainer.appendChild(btn);
+            });
+
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerUI();
+                if (timeLeft <= 0) selectAnswer(-1);
+            }, 1000);
+        }
+
+        function updateTimerUI() {
+            const t = document.getElementById('timer');
+            t.innerText = timeLeft + "s";
+            t.style.color = timeLeft < 5 ? "var(--crimson)" : "var(--gold)";
+        }
+
+        function selectAnswer(i) {
+            clearInterval(timer);
+            if (i === QUESTIONS[currentQ].a) score++;
+
+            currentQ++;
+            if (currentQ < QUESTIONS.length) {
+                renderQuestion();
+            } else {
+                finalize();
+            }
+        }
+
+        function finalize() {
+            document.getElementById('screen-active').classList.add('hidden');
+            document.getElementById('screen-result').classList.remove('hidden');
+
+            const pct = Math.round((score / QUESTIONS.length) * 100);
+            document.getElementById('final-score').innerText = pct + "%";
+
+            let title = "AMATEUR";
+            let msg = "A basic understanding, but the elite level requires deeper study into OS internals and system logic.";
+            
+            if (pct >= 90) { title = "SYSTEM ARCHITECT"; msg = "Exceptional. You possess a high-tier technical mindset ready for global architectural challenges."; }
+            else if (pct >= 70) { title = "SENIOR DEVELOPER"; msg = "Strong performance. You have a solid grasp of how the digital world is built and secured."; }
+            else if (pct >= 50) { title = "TECH ASSOCIATE"; msg = "You have the foundation, but continue exploring the complexity of data structures and networks."; }
+
+            document.getElementById('rank-title').innerText = "RANK: " + title;
+            document.getElementById('rank-msg').innerText = msg;
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>  
